@@ -16,7 +16,7 @@ pipeline {
         }
          stage('build'){
             when {
-                changeRequest author: 'jay sean', authorDisplayName: 'auth jay', branch: 'master', title: 'hey title'
+                changeRequest branch: 'master'
             }
             steps{
                 echo "sh npm run build"
