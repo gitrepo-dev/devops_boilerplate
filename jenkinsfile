@@ -10,7 +10,7 @@ pipeline {
         stage('test'){
             steps{
                 git changelog: false, poll: false, url: 'https://github.com/gitrepo-dev/devops_boilerplate.git'
-                echo "sh npm in"
+                echo "sh npm install"
                 echo "sh npm test"
             }
         }
