@@ -3,9 +3,48 @@ pipeline {
     environment {
         name = "enviroment"
     }
+    parameters {
+        string(name: "Your name", defaultValue: "rajesh kumar", description: "this is a name params")
+    }
     stages {
         stage('test'){
-          echo "this is test step"
+            steps{
+                echo "git cloning"
+                git changelog: false, poll: false, url: 'https://github.com/gitrepo-dev/devops_boilerplate.git'
+                echo "sh npm install"
+                echo "sh npm test"
+            }
+        }
+         stage('build'){
+            when {
+                changeRequest author: 'jay sean', authorDisplayName: 'auth jay', branch: 'master', title: 'hey title'
+            }
+            steps{
+                echo "sh npm run build"
+                echo "builded"
+            }
+        }
+         stage('qa'){
+          steps{
+            echo "sh deploy on qa"
+            echo "deployed"
+          }
+        }
+         stage('production'){
+          steps{
+            echo "production ready"
+          }
         }
     }
+    post {
+            always {
+                echo "always run this logic"
+            }
+            success {
+                echo "only run when all stages run success"
+            }
+            failure {
+                echo "only run when fail"
+            }
+        }
 }
